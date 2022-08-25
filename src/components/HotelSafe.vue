@@ -71,6 +71,7 @@ export default {
             if (self.isPinCorrect) {
               // Unlock the safe and reset the display
               self.safeStore.unlockSafe();
+              self.safeStore.setPin();
               self.resetDisplay();
             } else self.message = INVALID_MSG;
           } else {

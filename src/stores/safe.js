@@ -17,7 +17,7 @@ export const useSafeStore = defineStore({
     unlockSafe() {
       this.isLocked = false;
     },
-    setPin(newPin) {
+    setPin(newPin = "") {
       this.pin = newPin;
     },
   },
