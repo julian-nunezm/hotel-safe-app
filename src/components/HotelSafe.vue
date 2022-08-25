@@ -1,10 +1,16 @@
 <script>
+import { useSafeStore } from '../stores/safe';
+
 const MAX_DIGIT = 4; // PIN max length
 const CLEAR_KEY = "CLR"; // Value to clear the display
 const ENTER_KEY = "=>"; // Value to enter (validate) the PIN
 const INVALID_MSG = "INVALID"; // Messages shown when there is an invalid input
 
 export default {
+  setup() {
+    const safeStore = useSafeStore();
+    return { safeStore };
+  },
   data() {
     return {
       keys: [
@@ -22,9 +28,7 @@ export default {
         ENTER_KEY,
       ],
       enteredPin: "",
-      savedPin: "",
       message: "",
-      isSafeLocked: false, //  The safe starts being unlocked
     };
   },
   methods: {
@@ -59,13 +63,18 @@ export default {
       // determine whether the safe should be locked or unlocked
       try {
         let self = this;
+        // Validate if the entered pin is valid
         if (self.isValidPin) {
-          if (self.isSafeLocked) {
+          // Validate if the safe is locked
+          if (self.safeStore.getIsLocked) {
+            // Validate if the entered pin is equal to the stored one
             if (self.isPinCorrect) {
-              self.isSafeLocked = false;
+              // Unlock the safe and reset the display
+              self.safeStore.unlockSafe();
               self.resetDisplay();
             } else self.message = INVALID_MSG;
           } else {
+            // Store the pin when the safe is unlocked and reset the display
             self.savePin();
             self.resetDisplay();
           }
@@ -79,8 +88,8 @@ export default {
       // Store the entered pin to be validated later on and lock the safe
       try {
         let self = this;
-        self.savedPin = self.enteredPin;
-        self.isSafeLocked = true;
+        self.safeStore.setPin(self.enteredPin);
+        self.safeStore.lockSafe()
       } catch (error) {
         console.error(error.message);
         alert("There was an error when saving the pin.");
@@ -107,7 +116,7 @@ export default {
     isPinCorrect() {
       // Determine if the entered pin matches the saved one
       let self = this;
-      return self.savedPin == self.enteredPin;
+      return self.safeStore.getPin == self.enteredPin;
     },
   },
 };
@@ -124,7 +133,7 @@ export default {
       <label for="">{{ message }}</label>
     </div>
     <div class="indicator">
-      <button class="indicator" :class="{ lockedColor: isSafeLocked }"></button>
+      <button class="indicator" :class="{ lockedColor: safeStore.getIsLocked }"></button>
     </div>
   </div>
 </template>
