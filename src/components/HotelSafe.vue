@@ -1,5 +1,5 @@
 <script>
-import { useSafeStore } from '../stores/safe';
+import { useSafeStore } from "../stores/safe";
 
 const MAX_DIGIT = 4; // PIN max length
 const CLEAR_KEY = "CLR"; // Value to clear the display
@@ -89,7 +89,7 @@ export default {
       try {
         let self = this;
         self.safeStore.setPin(self.enteredPin);
-        self.safeStore.lockSafe()
+        self.safeStore.lockSafe();
       } catch (error) {
         console.error(error.message);
         alert("There was an error when saving the pin.");
@@ -133,7 +133,10 @@ export default {
       <label for="">{{ message }}</label>
     </div>
     <div class="indicator">
-      <button class="indicator" :class="{ lockedColor: safeStore.getIsLocked }"></button>
+      <button
+        class="indicator"
+        :class="{ lockedColor: safeStore.getIsLocked }"
+      ></button>
     </div>
   </div>
 </template>

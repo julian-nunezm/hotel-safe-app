@@ -3,8 +3,8 @@ import { defineStore } from "pinia";
 export const useSafeStore = defineStore({
   id: "safe",
   state: () => ({
-    isLocked: false,  //  The safe starts being unlocked
-    pin: ''
+    isLocked: false, //  The safe starts being unlocked
+    pin: "",
   }),
   getters: {
     getIsLocked: (state) => state.isLocked,
