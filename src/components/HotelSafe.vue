@@ -125,13 +125,19 @@ export default {
 
 <template>
   <div class="section">
-    <button class="key" @click="setKey(key)" v-for="key in keys" :key="key">
+    <button
+      class="key"
+      @click="setKey(key)"
+      v-for="key in keys"
+      :key="key"
+      data-test="button"
+    >
       {{ key }}
     </button>
   </div>
   <div class="section">
     <div class="display">
-      <label for="">{{ message }}</label>
+      <label for="" data-test="display">{{ message }}</label>
     </div>
     <div class="indicator">
       <button
