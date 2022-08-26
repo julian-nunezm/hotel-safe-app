@@ -124,57 +124,59 @@ export default {
 </script>
 
 <template>
-  <div class="section">
-    <button class="key" @click="setKey(key)" v-for="key in keys" :key="key">
-      {{ key }}
-    </button>
-  </div>
-  <div class="section">
-    <div class="display">
-      <label for="">{{ message }}</label>
-    </div>
-    <div class="indicator">
-      <button
-        class="indicator"
-        :class="{ lockedColor: safeStore.getIsLocked }"
-      ></button>
+  <div class="container safe">
+    <div class="row">
+      <div class="col-sm-5 border border-dark border-5 rounded keyboard">
+        <button
+          class="col-sm-4 btn-light key"
+          @click="setKey(key)"
+          v-for="key in keys"
+          :key="key"
+        >
+          {{ key }}
+        </button>
+      </div>
+      <div class="col-sm-7 px-5">
+        <div class="card border border-dark border-5 display">
+          <h1 class="display-2 mx-auto">{{ message }}</h1>
+        </div>
+        <div
+          class="border border-dark border-4 mx-auto my-4 indicator"
+          :class="{ lockedColor: safeStore.getIsLocked }"
+        ></div>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-div.section {
-  margin: 0px 25px;
-  width: 300px;
+div.safe {
+  background-color: #293f56;
+  padding: 100px;
+}
+
+div.keyboard {
+  background-color: #676566;
+  padding: 10px;
 }
 
 button.key {
-  height: 100px;
-  width: 100px;
+  height: 60px;
 }
 
-button.indicator {
-  height: 50px;
-  width: 50px;
+div.indicator {
+  height: 70px;
+  width: 70px;
   border-radius: 50%;
-  background-color: green;
+  background-color: #008100;
 }
 
-button.lockedColor {
+div.lockedColor {
   background-color: red;
 }
 
 div.display {
-  border-style: dotted;
+  background-color: #9ea18c;
   height: 100px;
-  width: 300px;
-  border: 1px black solid;
-}
-
-div.indicator {
-  margin-top: 20px;
-  height: 100px;
-  width: 300px;
-  text-align: center;
 }
 </style>
